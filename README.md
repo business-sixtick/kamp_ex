@@ -31,7 +31,7 @@
 ### progress
 1. github 생성
 2. 개발환경 구축 및 git 연동
->&nbsp;&nbsp;  - 개발언어 : python 3.8 (opencv, tensorflow
->&nbsp;&nbsp;  - 개발도구 : visual studio code
->&nbsp;&nbsp;  - 개발환경 : window 11 pro 64bit, i7-11700F, RAM 16G, GeForce RTX 3060
+>- 개발언어 : python 3.8 (opencv, tensorflow
+>- 개발도구 : visual studio code
+>- 개발환경 : window 11 pro 64bit, i7-11700F, RAM 16G, GeForce RTX 3060
 3. 데이터 분석 및 전처리
