@@ -12,6 +12,7 @@
 ### 데이터 저작권 
 - E-mail : kamp@kaist.ac.kr
 - 중소벤처기업부, Korea AI Manufacturing Platform(KAMP), 품질 이상탐지, 진단(크로메이트) AI 데이터셋, KAIST(㈜에이비에이치, ㈜임픽스), 2021.12.27., www.kamp-ai.kr
+![alt text](image-2.png)
 ***
 ### 프로젝트 일정
 1. [x] github 에 프로젝트 생성 20240821
@@ -31,7 +32,7 @@
 ### progress
 1. github 생성
 2. 개발환경 구축 및 git 연동
->- 개발언어 : python 3.8 (opencv, tensorflow
+>- 개발언어 : python 3.7.9 (opencv, tensorflow, scikit-learn, pandas, numpy, seaborn
 >- 개발도구 : visual studio code
 >- 개발환경 : window 11 pro 64bit, i7-11700F, RAM 16G, GeForce RTX 3060
 3. 데이터 분석 및 전처리
