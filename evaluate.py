@@ -8,18 +8,37 @@ layers = tf.keras.layers
 
 model = models.load_model('TDOD 모델 생성후 넣기')
 
-def get_train_data_kemp(to_gray = False) :
+def get_train_data_kemp(to_gray = True) :
     image_path_arr = ['../image/KEMP_IMG_DATA_1.png', '../image/KEMP_IMG_DATA_Error_2.png', '../image/KEMP_IMG_DATA_Error_12.png']
-    image_arr_weight = [8,1,1]
+    image_arr_weight = [6,2,2]
     path = s.sample(image_path_arr, 1, counts=image_arr_weight)[0]
-    if to_gray : 
+    if not to_gray : 
         x_train = s.cv.imread(path)
+
+        height, width = x_train.shape[:2]
+        angle = s.random() * 10 - 5
+        rotation_matrix = s.cv.getRotationMatrix2D((width / 2, height / 2), angle, 1)
+        rotation_matrix[0][2] += s.random() * 72 - 36 # 세로 축 이동
+        rotation_matrix[1][2] += s.random() * 48 - 24 # 가로 축 이동
+        # print(rotation_matrix, type(rotation_matrix), rotation_matrix[0][2])
+        x_train = s.cv.warpAffine(x_train, rotation_matrix, (width, height))
+
         y_train = not 'Error' in path
         return x_train, s.np.array([y_train])
     else : 
         x_train = s.cv.imread(path, s.cv.IMREAD_GRAYSCALE)
+
+        height, width = x_train.shape
+        angle = s.random() * 10 - 5
+        rotation_matrix = s.cv.getRotationMatrix2D((width / 2, height / 2), angle, 1)
+        rotation_matrix[0][2] += s.random() * 72 - 36 # 세로 축 이동
+        rotation_matrix[1][2] += s.random() * 48 - 24 # 가로 축 이동
+        # print(rotation_matrix, type(rotation_matrix), rotation_matrix[0][2])
+        x_train = s.cv.warpAffine(x_train, rotation_matrix, (width, height))
+
         y_train = not 'Error' in path
         return x_train.reshape(-1, 720, 480), s.np.array([y_train]) #s.np.array([int(y_train)])
+ 
 
 
 loss_arr = []
