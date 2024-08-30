@@ -33,36 +33,36 @@ def get_data_path_arr() -> List[str]:
     random.shuffle(image_path_arr)
     return image_path_arr
 
-# def get_train_data_kemp(to_gray = True) :
-#     image_path_arr = ['../image/KEMP_IMG_DATA_1.png', '../image/KEMP_IMG_DATA_Error_2.png', '../image/KEMP_IMG_DATA_Error_12.png']
-#     image_arr_weight = [6,2,2]
-#     path = s.sample(image_path_arr, 1, counts=image_arr_weight)[0]
-#     if not to_gray : 
-#         x_train = s.cv.imread(path)
+def get_train_data_kemp(to_gray = True) :
+    image_path_arr = [r'C:\source\kamp_ex\image\KEMP_IMG_DATA_1.png', r'C:\source\kamp_ex\image\KEMP_IMG_DATA_Error_2.png', r'C:\source\kamp_ex\image\KEMP_IMG_DATA_Error_12.png']
+    image_arr_weight = [6,2,2]
+    path = s.choices(image_path_arr, k=1, weights=image_arr_weight)[0]  #choices
+    if not to_gray : 
+        x_train = s.cv.imread(path)
 
-#         height, width = x_train.shape[:2]
-#         angle = s.random() * 10 - 5
-#         rotation_matrix = s.cv.getRotationMatrix2D((width / 2, height / 2), angle, 1)
-#         rotation_matrix[0][2] += s.random() * 72 - 36 # 세로 축 이동
-#         rotation_matrix[1][2] += s.random() * 48 - 24 # 가로 축 이동
-#         # print(rotation_matrix, type(rotation_matrix), rotation_matrix[0][2])
-#         x_train = s.cv.warpAffine(x_train, rotation_matrix, (width, height))
+        height, width = x_train.shape[:2]
+        angle = s.random() * 10 - 5
+        rotation_matrix = s.cv.getRotationMatrix2D((width / 2, height / 2), angle, 1)
+        rotation_matrix[0][2] += s.random() * 72 - 36 # 세로 축 이동
+        rotation_matrix[1][2] += s.random() * 48 - 24 # 가로 축 이동
+        # print(rotation_matrix, type(rotation_matrix), rotation_matrix[0][2])
+        x_train = s.cv.warpAffine(x_train, rotation_matrix, (width, height))
 
-#         y_train = not 'Error' in path
-#         return x_train, s.np.array([y_train])
-#     else : 
-#         x_train = s.cv.imread(path, s.cv.IMREAD_GRAYSCALE)
+        y_train = not 'Error' in path
+        return x_train, s.np.array([y_train])
+    else : 
+        x_train = s.cv.imread(path, s.cv.IMREAD_GRAYSCALE)
+        print(x_train)
+        height, width = x_train.shape
+        angle = s.random() * 10 - 5
+        rotation_matrix = s.cv.getRotationMatrix2D((width / 2, height / 2), angle, 1)
+        rotation_matrix[0][2] += s.random() * 72 - 36 # 세로 축 이동
+        rotation_matrix[1][2] += s.random() * 48 - 24 # 가로 축 이동
+        # print(rotation_matrix, type(rotation_matrix), rotation_matrix[0][2])
+        x_train = s.cv.warpAffine(x_train, rotation_matrix, (width, height))
 
-#         height, width = x_train.shape
-#         angle = s.random() * 10 - 5
-#         rotation_matrix = s.cv.getRotationMatrix2D((width / 2, height / 2), angle, 1)
-#         rotation_matrix[0][2] += s.random() * 72 - 36 # 세로 축 이동
-#         rotation_matrix[1][2] += s.random() * 48 - 24 # 가로 축 이동
-#         # print(rotation_matrix, type(rotation_matrix), rotation_matrix[0][2])
-#         x_train = s.cv.warpAffine(x_train, rotation_matrix, (width, height))
-
-#         y_train = not 'Error' in path
-#         return x_train.reshape(-1, 720, 480), s.np.array([y_train]) #s.np.array([int(y_train)])
+        y_train = not 'Error' in path
+        return x_train.reshape(-1, 720, 480), s.np.array([y_train]) #s.np.array([int(y_train)])
  
 
 
@@ -72,18 +72,19 @@ count = 10
 
 image_path_arr = get_data_path_arr()
 for i in range(count):
-    # x_org, y = get_train_data_kemp(True)
-    # image_path = f'C:\source\kamp_ex\{image_path_arr[i]}' 
-    x_org, y = s.cv.imread(image_path_arr[i]), not 'Error' in image_path_arr[i]
+    x_org, y = get_train_data_kemp(False) # 가상
+    
+    # x_org, y = s.cv.imread(image_path_arr[i]), np.array([not 'Error' in image_path_arr[i]]) # 오리진
     
     image_name = f'img_OK {i}'
     if not y :
         image_name = f'img_BAD {i}'
     #cv.imshow(image_name, x)
-    print(x_org)
+    # print(x_org)
     s.image_center_show(image_name, x_org)
 
-    x = s.cv.cvtColor(x_org, s.cv.COLOR_BGR2GRAY).reshape(-1, 720, 480)
+    x = s.cv.cvtColor(x_org, s.cv.COLOR_BGR2GRAY).reshape(-1, 720, 480) # 오리진
+    # x = x_org.reshape(-1, 720, 480)
     # print(x.shape)
 
     loss, accuracy = model.evaluate(x, y)
@@ -98,7 +99,7 @@ for i in range(count):
     s.image_center_show(image_name, x_org)
     loss_arr.append(round(loss, 1))
     accuracy_arr.append(round(accuracy, 1))
-    cv.waitKey(0)
+    cv.waitKey(1000)
 
 
 

@@ -36,8 +36,8 @@ def get_data_path_arr(is_train : bool = True) -> List[str]:
 loss_arr = []
 accuracy_arr = []
 predictions_arr = []
-count = 100
-delay = 100
+count = 200
+delay = 1000
 
 image_path_arr = get_data_path_arr(False)
 for i in range(count):
